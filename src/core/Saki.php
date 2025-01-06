@@ -23,7 +23,7 @@ class Saki{
 
         $this->controller=$this->getController();
 
-        $this->view=new \Saki\Core\BaseView($this->controller);
+        $this->view=new \Saki\Core\BaseView($this->controller,$this->route);
 
     }
 

@@ -3,15 +3,19 @@ namespace Saki\Core;
 
 class BaseView{
 
-    public $model;
+    public object $model;
 
-    public $controller;
+    public object $controller;
 
-    public function __construct($controller){
+    public string $route;
+
+    public function __construct($controller, string $route){
 
         $this->controller=$controller;
 
         $this->model=$this->controller->model;
+
+        $this->route=$route;
 
     }
 
@@ -19,7 +23,7 @@ class BaseView{
 
         include_once "src/partial/header.php";
 
-        $baseFile="src/main/base.php";
+        $baseFile="src/".$this->route."/base.php";
 
         if(file_exists($baseFile)){
 
