@@ -3,6 +3,12 @@ namespace Saki\Core;
 
 class SakiModel extends ConnectedModel{
 
+    public function projectExists(string $check):bool{
+
+        return $this->projectCodeExists($check);
+
+    }
+
     public function projectCodeExists(string $check):bool{
 
         $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `projects` WHERE projectcode=?",

@@ -31,4 +31,18 @@ class BaseModel{
 
     }
 
+    public function getSubmittedData(mixed $submitArray):array{
+
+        $data=array();
+
+        foreach($submitArray as $key=>$value){
+
+            $data[$key]=$value;
+
+        }
+
+        return $data;
+
+    }
+
 }
