@@ -15,7 +15,7 @@ class Saki{
 
         $this->controller=new \Saki\Core\SakiController($this->model);
 
-        var_dump($this->controller);
+        $this->view=new \Saki\Core\BaseView($this->controller);
 
     }
 

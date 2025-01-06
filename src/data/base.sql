@@ -3,7 +3,7 @@ CREATE TABLE `projects`(
     title VARCHAR(100) NOT NULL,
     projectcode VARCHAR(12) NOT NULL,
     body TEXT,
-    status ENUM('open','completed','closed'),
+    status ENUM('open','completed','closed')
 
     PRIMARY KEY(id),
     UNIQUE(projectcode)

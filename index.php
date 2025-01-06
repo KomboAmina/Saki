@@ -38,4 +38,6 @@ else{
 
     $saki=new \Saki\Core\Saki();
 
+    $saki->view->load();
+
 }
