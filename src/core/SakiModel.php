@@ -14,20 +14,6 @@ class SakiModel extends ConnectedModel{
 
     }
 
-    public function generateProjectCode():string{
-
-        $code=\Saki\Core\StringGenerator::generateCode(12);
-
-        if($this->projectCodeExists($code)){
-
-            $code=$this->generateProjectCode();
-
-        }
-
-        return $code;
-
-    }
-
     public function hasProjects():bool{
 
         $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `projects`",array());

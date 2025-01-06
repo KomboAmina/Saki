@@ -9,7 +9,8 @@
     "autoload": {
         "psr-4": {
             "Saki\\": "src/",
-            "Saki\\Core\\":"src/core/"
+            "Saki\\Core\\":"src/core/",
+            "Saki\\Projects\\":"src/projects/"
         }
     },
     "authors": [
