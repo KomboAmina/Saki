@@ -1,0 +1,21 @@
+{
+    "name": "komboamina/saki",
+    "description": "Freelance Strategy Deck.",
+    "type": "project",
+    "require": {
+        "twbs/bootstrap": "^5.3",
+        "phpunit/phpunit": "^11.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Saki\\": "src/",
+            "Saki\\Core\\":"src/core/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Amina Kombo",
+            "email": "kombo.work@gmail.com"
+        }
+    ]
+}
