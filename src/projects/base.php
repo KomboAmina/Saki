@@ -7,10 +7,9 @@ if(!$this->model->hasSelectedProject()){
     include "list.php";
 
 }
+
 else{
 
     include "project.php";
 
 }
-
-
