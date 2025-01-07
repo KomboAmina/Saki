@@ -16,7 +16,7 @@ class="d-grid"
 <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>
 <input type="hidden" name="priority" value="<?php echo $task->priority-1;?>"/>
 <input type="hidden" name="action" value="move task"/>
-<button class="btn btn-sm btn-default">&uarr;</button>
+<button class="btn btn-sm btn-outline-primary">&uarr;</button>
 </form>
     <?php
 
@@ -35,6 +35,6 @@ class="d-grid"
 <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>
 <input type="hidden" name="priority" value="<?php echo $task->priority+1;?>"/>
 <input type="hidden" name="action" value="move task"/>
-<button class="btn btn-sm btn-default">&darr;</button>
+<button class="btn btn-sm btn-outline-primary">&darr;</button>
 </form>
     <?php

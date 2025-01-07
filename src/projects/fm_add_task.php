@@ -29,7 +29,7 @@ class="container-fluid p-5"
             <label>Priority (1- Highest)</label>
 
             <input type="number" name="priority" id="txtpriority" placeholder="Priority: 1=Highest"
-             class="form-control" value="1" min="1" required/>
+             class="form-control" value="<?php echo $defaultpriority+1;?>" min="1" required/>
 
         </div>
 

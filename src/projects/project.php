@@ -4,6 +4,8 @@ $project=$this->model->getProject($_GET['levelb']);
 
 include "src/partial/projects_menu.php";
 
+$defaultpriority=1;
+
 ?>
 <section class="container">
     <div class="row">
