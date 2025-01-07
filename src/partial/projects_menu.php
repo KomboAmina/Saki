@@ -3,7 +3,7 @@
 $menuprojects=$this->model->getMenuProjects();
 
 ?>
-<nav>
+<nav class="container p-2">
 
     <ul class="row justify-content-end">
 
