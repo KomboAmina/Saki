@@ -3,7 +3,7 @@ CREATE TABLE `projects`(
     title VARCHAR(100) NOT NULL,
     projectcode VARCHAR(12) NOT NULL,
     body TEXT,
-    status ENUM('open','completed','closed')
+    status ENUM('open','completed','closed'),
 
     PRIMARY KEY(id),
     UNIQUE(projectcode)
@@ -18,7 +18,7 @@ CREATE TABLE `tasks`(
     iscomplete BOOLEAN NOT NULL DEFAULT false,
 
     PRIMARY KEY(id),
-    FOREIGN KEY(projectid) REFERENCES `projects`(id)
+    FOREIGN KEY(projectid) REFERENCES `projects`(id) ON DELETE CASCADE
 );
 
 CREATE TABLE `nestedtasks`(
@@ -27,6 +27,6 @@ CREATE TABLE `nestedtasks`(
     linkedtask INT(30) NOT NULL,
 
     PRIMARY KEY(id),
-    FOREIGN KEY(maintask) REFERENCES `tasks`(id),
-    FOREIGN KEY(linkedtask) REFERENCES `tasks`(id)
+    FOREIGN KEY(maintask) REFERENCES `tasks`(id) ON DELETE CASCADE,
+    FOREIGN KEY(linkedtask) REFERENCES `tasks`(id) ON DELETE CASCADE
 );

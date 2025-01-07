@@ -46,6 +46,45 @@ class SakiModel extends ConnectedModel{
         return $task;
 
     }
+
+    public function getTotalTasks():int{
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `tasks`",array());
+
+        $cn=$st->fetchColumn();
+
+        return intval($cn);
+
+    }
+
+    public function getTotalCompletedTasks():int{
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `tasks` WHERE iscomplete=?",
+        array(true));
+
+        $cn=$st->fetchColumn();
+
+        return intval($cn);
+
+    }
+
+    public function getUniversalCompletionRate():float{
+
+        $rate=0;
+
+        $total=$this->getTotalTasks();
+
+        if($total>0){
+
+            $completed=$this->getTotalCompletedTasks();
+
+            $rate=($completed/$total)*100;
+
+        }
+
+        return $rate;
+
+    }
     
 
 }

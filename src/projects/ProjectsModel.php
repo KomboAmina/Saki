@@ -91,6 +91,14 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     public function deleteProject(array $vals):bool{
 
+        $tasks=$this->getProjectTasks($vals['id']);
+
+        foreach($tasks as $task){
+
+            $this->dbcon->executeQuery("DELETE FROM `nestedtasks` WHERE maintask=? OR linkedtask=?",array($task->id,$task->id));
+
+        }
+
         $this->dbcon->executeQuery("DELETE FROM `tasks` WHERE projectid=?",array($vals['id']));
 
         $this->dbcon->executeQuery("DELETE FROM `projects` WHERE id=?",array($vals['id']));
@@ -187,25 +195,19 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
         $tasks=array();
 
-        $hasNested=$this->projectHasNestedTasks($projectid);
+        $ctasks=$this->getProjectTasks($projectid);
 
-        if($hasNested){
+        $filteredtasks=array();
 
-            $st=$this->dbcon->executeQuery("SELECT DISTINCT(nestedtasks.maintask) as taskid FROM `nestedtasks`
-             INNER JOIN `tasks`
-              ON tasks.projectid=nestedtasks.maintask WHERE tasks.projectid=?
-              ORDER BY tasks.iscomplete DESC, tasks.priority ASC",array($projectid));
+        foreach($ctasks as $ctask){
 
-              while($ro=$st->fetchObject()){
+            $islinked=$this->getInfo("nestedtasks","linkedtask",$ctask->id,"id");
 
-                    $tasks[]=$this->getTask($ro->taskid);
+            if(intval($islinked)<1){
 
-              }
+                $tasks[]=$ctask;
 
-        }
-        else{
-
-            $tasks=$this->getProjectTasks($projectid);
+            }
 
         }
         
@@ -232,6 +234,17 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
+    public function isNestedTask(int $taskid):bool{
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `nestedtasks` WHERE linkedtask=?",
+        array($taskid));
+
+        $cn=$st->fetchColumn();
+
+        return intval($cn)>0;
+
+    }
+
     public function moveTask(array $vals):void{
 
         $this->dbcon->executeQuery("UPDATE `tasks` SET priority=? WHERE id=?",
@@ -246,18 +259,44 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
         $projectStatusChanged=false;
 
+        $tasks=$this->getNestedTasks($vals['taskid']);
+
         if($vals['iscomplete']==true){
 
-            $rate=$this->getProjectCompletionRate($vals['projectid']);
+            $isNested=$this->isNestedTask($vals['taskid']);
 
-            $status=$this->getInfo("projects","id",$vals['projectid'],"status");
+            if($isNested){
 
-            if($rate==100 && $status=="open"){
+                foreach($tasks as $task){
 
-                $this->dbcon->executeQuery("UPDATE `projects` SET status=? WHERE id=?",
-                array("completed",$vals['projectid']));
+                    $this->dbcon->executeQuery("UPDATE `tasks` SET iscomplete=? WHERE id=?",
+                    array(false,$task->id));
 
-                $projectStatusChanged=true;
+                }
+
+            }
+
+            if(!$isNested){
+
+                $rate=$this->getProjectCompletionRate($vals['projectid']);
+
+                $status=$this->getInfo("projects","id",$vals['projectid'],"status");
+
+                foreach($tasks as $task){
+
+                    $this->dbcon->executeQuery("UPDATE `tasks` SET iscomplete=? WHERE id=?",
+                    array(true,$task->id));
+
+                }
+
+                if($rate==100 && $status=="open"){
+
+                    $this->dbcon->executeQuery("UPDATE `projects` SET status=? WHERE id=?",
+                    array("completed",$vals['projectid']));
+
+                    $projectStatusChanged=true;
+
+                }
 
             }
 
@@ -268,6 +307,13 @@ class ProjectsModel extends \Saki\Core\SakiModel{
             $rate=$this->getProjectCompletionRate($vals['projectid']);
 
             $status=$this->getInfo("projects","id",$vals['projectid'],"status");
+
+            foreach($tasks as $task){
+
+                $this->dbcon->executeQuery("UPDATE `tasks` SET iscomplete=? WHERE id=?",
+                array(false,$task->id));
+
+            }
 
             if($rate<100 && $status!="open"){
 
@@ -284,10 +330,63 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
+    public function deleteTask(array $vals):void{
+
+        $isNested=$this->isNestedTask($vals['taskid']);
+
+        if(!$isNested){
+
+            $tasks=$this->getNestedTasks($vals['taskid']);
+
+            $tasks[]=$this->getTask($vals['taskid']);
+
+            foreach($tasks as $task){
+
+                $this->dbcon->executeQuery("DELETE FROM `nestedtasks` WHERE linkedtask=?",
+                                            array($task->id));
+
+                $this->dbcon->executeQuery("DELETE FROM `tasks` WHERE id=?",
+                                            array($task->id));
+
+            }
+
+        }
+
+        $this->dbcon->executeQuery("DELETE FROM `nestedtasks` WHERE maintask=?",array($vals['taskid']));
+
+        $this->dbcon->executeQuery("DELETE FROM `tasks` WHERE id=?",
+                                    array($vals['taskid']));
+
+    }
+
     public function addTask(array $vals):void{
 
         $this->dbcon->executeQuery("INSERT INTO `tasks`(projectid,task,taskbody,priority) VALUES(?,?,?,?)",
         array($vals['projectid'],$vals['task'],$vals['body'],$vals['priority']));
+
+    }
+
+    public function addNestedTask(array $vals):void{
+
+        $this->addTask($vals);
+
+        $st=$this->dbcon->executeQuery("SELECT id FROM `tasks` ORDER BY id DESC LIMIT 1",
+        array());
+
+        $newtask=null;
+
+        while($ro=$st->fetchObject()){
+
+            $newtask=$ro->id;
+
+        }
+
+        if(!empty($newtask)){
+
+            $this->dbcon->executeQuery("INSERT INTO `nestedtasks`(maintask,linkedtask) VALUES(?,?)",
+            array($vals['maintask'],$newtask));
+
+        }
 
     }
 
@@ -311,6 +410,42 @@ class ProjectsModel extends \Saki\Core\SakiModel{
         if($total!=0){
 
             $rate=($completed/$total)*100;
+
+        }
+
+        return $rate;
+
+    }
+
+    public function getTotalNestedTasks(int $taskid):int{
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `nestedtasks` WHERE maintask=?",
+        array($taskid));
+
+        $cn=$st->fetchColumn();
+
+        return intval($cn);
+
+    }
+
+    public function getTaskCompletionRate(int $taskid):float{
+
+        $rate=0;
+
+        $totalNested=$this->getTotalNestedTasks($taskid);
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(tasks.id) FROM `tasks`
+         INNER JOIN `nestedtasks` ON tasks.id=nestedtasks.linkedtask
+          WHERE nestedtasks.maintask=? AND tasks.iscomplete=?",
+        array($taskid,true));
+
+        $cn=$st->fetchColumn();
+
+        $cn=intval($cn);
+
+        if($totalNested!=0){
+
+            $rate=($cn/$totalNested)*100;
 
         }
 

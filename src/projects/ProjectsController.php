@@ -133,6 +133,47 @@ class ProjectsController extends \Saki\Core\SakiController{
 
     }
 
+    public function addNestedTask(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        if(isset($params['task']) && isset($params['desc']) &&
+         isset($params['priority']) && isset($params['projectid'])){
+
+            $ret['errors']=$this->checkBlanks(array($params['task'],
+                                                $params['desc'],
+                                                $params['priority'],
+                                                $params['projectid'],
+                                                $params['maintask']
+                                            ));
+
+        }
+        else{
+
+            $ret['errors'][]="missing task data parameters.";
+
+        }
+
+        if(empty($ret['errors'])){
+
+            $this->model->addNestedTask(
+                                    array(
+                                        "projectid"=>$params['projectid'],
+                                        "task"=>$params['task'],
+                                        "body"=>$params['desc'],
+                                        "priority"=>$params['priority'],
+                                        "maintask"=>$params['maintask']
+                                    )
+                                );
+
+            $ret['status']="task created";
+
+        }
+
+        return $ret;
+
+    }
+
     public function moveTask(array $params):mixed{
 
         $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
@@ -161,6 +202,12 @@ class ProjectsController extends \Saki\Core\SakiController{
         $ret['status']=($changed) ? "project changed":"task marked";
 
         return $ret;
+
+    }
+
+    public function markNestedTask(array $params):mixed{
+
+        return $this->markTask($params);
 
     }
 
@@ -195,6 +242,29 @@ class ProjectsController extends \Saki\Core\SakiController{
             $ret['status']="task updated";
 
         }
+
+        return $ret;
+
+    }
+
+    public function deleteNestedTask(array $params):mixed{
+
+        return $this->deleteTask($params);
+
+    }
+
+    public function deleteTask(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        $this->model->deleteTask(
+                                array(
+                                    "projectid"=>$params['projectid'],
+                                    "taskid"=>$params['taskid']
+                                )
+                            );
+
+        $ret['status']="task deleted";
 
         return $ret;
 

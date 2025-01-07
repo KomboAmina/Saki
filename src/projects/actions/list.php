@@ -15,28 +15,36 @@ $projects=$controller->model->getListProjects();
 //print_r($projects);
 
 ?>
-<section class="container">
+<section class="container p-4">
 <h1>Projects</h1>
-<?php if(!empty($projects)){?>
-<p>Choose
-<?php } else{?>Create<?php }?> a Project to continue.</p>
-    <div class="list-group">
-    <?php foreach($projects as $project){
-        $rate=$controller->model->getProjectCompletionRate($project->id);
-        ?>
+<div class="row justify-content-center">
+    <div class="col-sm-12 col-md-4 text-center p-4">
 
-        <a href="<?php echo URL."projects/".$project->projectcode."/";?>" class="list-group-item">
-        <?php echo $project->title." &nbsp; | &nbsp; <small>tasks: ".$controller->model->countProjectTasks($project->id)." | (".$project->status.")</small>";?></a>
-        
-        <div class="progress mb-4" role="progressbar"
-            aria-label="Progress Bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-            <div class="progress-bar-striped <?php echo $controller->model->getProgressBarColor($rate);?>" style="width: <?php echo $rate;?>%"></div>
-        </div>
+        <p class="display-1">&approx;<?php echo number_format($controller->model->getUniversalCompletionRate());?>%</p>
+        <p>complete</p>
 
-
-    <?php }?>
     </div>
-    </section>
+    <div class="col-sm-12 col-md-8">
+    <?php if(!empty($projects)){?>
+    <p>Choose
+    <?php } else{?>Create<?php }?> a Project to continue.</p>
+        <div class="list-group mb-2">
+        <?php foreach($projects as $project){
+            $rate=$controller->model->getProjectCompletionRate($project->id);
+            ?>
 
-<?php
+            <a href="<?php echo URL."projects/".$project->projectcode."/";?>"
+            class="list-group-item">
+            <?php echo $project->title." &nbsp; | &nbsp; <small>tasks: ".$controller->model->countProjectTasks($project->id)." | (".$project->status.")</small>";?></a>
+            
+            <?php
+            include "progress_bar.php";
+            ?>
+            <div class="mb-2"></div>
 
+
+        <?php }?>
+        </div>
+        </section>
+    </div>
+</div>

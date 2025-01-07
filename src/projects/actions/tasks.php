@@ -20,12 +20,10 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
 
 ?>
 <h2>Tasks: <?php echo number_format($rate=$controller->model->getProjectCompletionRate($project->id),2);?>% Complete</h2>
-<div class="progress mt-2 mb-2" role="progressbar"
- aria-label="Progress Bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress-bar-striped <?php echo $controller->model->getProgressBarColor($rate);?>" style="width: <?php echo $rate;?>%"></div>
-</div>
 
-<div class="accordion" id="taskordion">
+<?php include "progress_bar.php";?>
+
+<div class="accordion mt-4" id="taskordion">
 <?php foreach($tasks as $task){
     
         $defaultpriority=$task->priority;
@@ -43,12 +41,12 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
         <div class="row justify-content-start">
                 <div class="col-sm-12 col-md-1">
                     <?php if(!$task->iscomplete && $project->status=="open"){include "move.php";}?></div>
-                <div class="col-sm-12 col-md-8">
+                <div class="col-sm-12 col-md-10">
                 <?php echo "<h3>".$task->task."</h3><small>";
                 echo ($task->iscomplete) ?"complete":"pending";
                 echo "&nbsp; | &nbsp; priority: ".$task->priority."</small>";?>
                 </div>
-                <div class="col-sm-12 col-md-3">
+                <div class="col-sm-12 col-md-1">
                     <?php if($project->status=="open"){include "mark.php";}?>
                 </div>
                 
@@ -111,7 +109,7 @@ function toggleTaskBody(targetdiv){
         div.style.display="block";
 
     }
-    
+
     else{
 
         div.style.display="none";
