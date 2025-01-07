@@ -185,4 +185,24 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
+    public function getProjectCompletionRate(int $projectid):float{
+
+        $rate=0;
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `tasks` WHERE projectid=? AND iscomplete=?",array($projectid,true));
+
+        $completed=$st->fetchColumn();
+
+        $total=$this->countProjectTasks($projectid);
+
+        if($total!=0){
+
+            $rate=($completed/$total)*100;
+
+        }
+
+        return $rate;
+
+    }
+
 }

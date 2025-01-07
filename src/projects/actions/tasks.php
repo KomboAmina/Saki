@@ -21,6 +21,7 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
 //print_r($tasks);
 
 ?>
+<h2><?php echo number_format($controller->model->getProjectCompletionRate($project->id),2);?>% Complete</h2>
 <section class="list-group">
     <?php foreach($tasks as $task){
         
