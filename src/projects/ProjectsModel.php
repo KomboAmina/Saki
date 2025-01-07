@@ -71,23 +71,33 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
         $code=$this->generateProjectCode();
 
-        /**
-         * CREATE TABLE `projects`(
-    id INT(11) NOT NULL AUTO_INCREMENT,
-    title VARCHAR(100) NOT NULL,
-    projectcode VARCHAR(12) NOT NULL,
-    body TEXT,
-    status ENUM('open','completed','closed')
-
-    PRIMARY KEY(id),
-    UNIQUE(projectcode)
-);
-         */
-
         $st=$this->dbcon->executeQuery("INSERT INTO `projects`(title,projectcode,body,status) VALUES(?,?,?,?)",
         array($vals['title'],$code,$vals['body'],"open"));
 
         return $this->projectCodeExists($code);
+
+    }
+
+    public function editProject(array $vals):bool{
+
+        $st=$this->dbcon->executeQuery("UPDATE `projects` SET title=?,body=?,status=? WHERE id=?",
+        array($vals['title'],$vals['body'],$vals['status'],$vals['id']));
+
+        $code=$this->getInfo("projects","id",$vals['id'],"projectcode");
+
+        return $this->projectCodeExists($code);
+
+    }
+
+    public function deleteProject(array $vals):bool{
+
+        $this->dbcon->executeQuery("DELETE FROM `tasks` WHERE projectid=?",array($vals['id']));
+
+        $this->dbcon->executeQuery("DELETE FROM `projects` WHERE id=?",array($vals['id']));
+
+        $code=$this->getInfo("projects","id",$vals['id'],"projectcode");
+
+        return !$this->projectCodeExists($code);
 
     }
 

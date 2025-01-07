@@ -22,6 +22,18 @@ if(isset($_POST['action'])){
 
     }
 
-    include_once "list.php";
+    switch($methodName){
+        case "addProject":
+            include_once "list.php";
+            break;
+        case "editProject": case "deleteProject":
+            ?>
+            <script type="text/javascript">
+                window.location.reload();
+            </script>
+            <?php
+            break;
+    }
+    
 
 }

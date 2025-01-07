@@ -38,4 +38,61 @@ class ProjectsController extends \Saki\Core\SakiController{
 
     }
 
+    public function editProject(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        if(isset($params['title']) && isset($params['desc']) && isset($params['status'])){
+
+            $ret['errors']=$this->checkBlanks(array($params['title'],$params['desc']));
+
+        }
+        else{
+
+            $ret['errors'][]="missing project data parameters.";
+
+        }
+
+        if(empty($ret['errors'])){
+
+            $exists=$this->model->editProject(
+                                array(
+                                    "title"=>$params['title'],
+                                    "body"=>$params['desc'],
+                                    "status"=>$params['status'],
+                                    "id"=>$params['id']
+                                    )
+                                );
+
+            if($exists){
+
+                $ret['status']="project created";
+
+            }
+        }
+
+        return $ret;
+
+    }
+
+    public function deleteProject(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        $exists=$this->model->deleteProject(
+                            array(
+                                "id"=>$params['id']
+                                )
+                            );
+
+        if(!$exists){
+
+            $ret['status']="project deleted";
+
+        }
+
+        return $ret;
+
+    }
+
 }
