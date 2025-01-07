@@ -95,4 +95,42 @@ class ProjectsController extends \Saki\Core\SakiController{
 
     }
 
+    public function addTask(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        if(isset($params['task']) && isset($params['desc']) &&
+         isset($params['priority']) && isset($params['projectid'])){
+
+            $ret['errors']=$this->checkBlanks(array($params['task'],
+                                                $params['desc'],
+                                                $params['priority'],
+                                                $params['projectid']));
+
+        }
+        else{
+
+            $ret['errors'][]="missing task data parameters.";
+
+        }
+
+        if(empty($ret['errors'])){
+
+            $this->model->addTask(
+                                    array(
+                                        "projectid"=>$params['projectid'],
+                                        "task"=>$params['task'],
+                                        "body"=>$params['desc'],
+                                        "priority"=>$params['priority']
+                                    )
+                                );
+
+            $ret['status']="task created";
+
+        }
+
+        return $ret;
+
+    }
+
 }

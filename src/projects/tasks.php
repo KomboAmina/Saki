@@ -1,2 +1,6 @@
 <?php
-$tasks=$this->model->getProjectTasks($project->id);
+
+$controller=$this->controller;
+
+include "actions/tasks.php";
+

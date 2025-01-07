@@ -17,10 +17,20 @@ include "src/partial/projects_menu.php";
                 <h1><?php echo $project->title;?></h1>
                 <p><?php echo $project->body;?></p>
                 <p><?php echo $project->status;?></p><hr />
-
-                <?php include "tasks.php";?>
-
             </div>
+
+            <div id="dv-tasks">
+                <?php
+                $init=false;
+                include "tasks.php";?>
+            </div>
+
+            <?php if($project->status=="open"){
+
+                include "fm_add_task.php";
+
+            }
+?>
 
         </div>
     </div>
