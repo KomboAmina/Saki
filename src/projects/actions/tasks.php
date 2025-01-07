@@ -14,11 +14,9 @@ $project=(isset($project->id)) ? $project:$controller->model->getProject(intval(
 
 if(isset($project->id)){
 
-$tasks=$controller->model->getProjectTasks($project->id);
+$tasks=$controller->model->getMainProjectTasks($project->id);
 
 $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
-
-//print_r($tasks);
 
 ?>
 <h2>Tasks: <?php echo number_format($rate=$controller->model->getProjectCompletionRate($project->id),2);?>% Complete</h2>
@@ -45,15 +43,15 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
         <div class="row justify-content-start">
                 <div class="col-sm-12 col-md-1">
                     <?php if(!$task->iscomplete && $project->status=="open"){include "move.php";}?></div>
-                <div class="col-sm-12 col-md-7">
+                <div class="col-sm-12 col-md-8">
                 <?php echo "<h3>".$task->task."</h3><small>";
                 echo ($task->iscomplete) ?"complete":"pending";
                 echo "&nbsp; | &nbsp; priority: ".$task->priority."</small>";?>
                 </div>
-                <div class="col-sm-12 col-md-1">
+                <div class="col-sm-12 col-md-3">
                     <?php if($project->status=="open"){include "mark.php";}?>
                 </div>
-                <div class="col-sm-12 col-md-3">edit/delete</div>
+                
             </div>
 
     </div>
@@ -61,7 +59,7 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
     <div id="taskordion-<?php echo $task->id;?>" class="accordion-collapse collapse"
      data-bs-parent="#taskordion">
       <div class="accordion-body">
-        <p>Tak stuff.</p>
+        <?php include "main_task.php";?>
       </div>
     </div>
   </div>
@@ -97,3 +95,38 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
 <?php
 
 }
+?>
+
+
+<script type="text/javascript">
+
+
+
+function toggleTaskBody(targetdiv){
+
+    var div=document.getElementById(targetdiv);
+
+    if(div.style.display==="none"){
+
+        div.style.display="block";
+
+    }
+    
+    else{
+
+        div.style.display="none";
+
+    }
+    
+
+    /**
+     * if (x.style.display === "none") {
+    x.style.display = "block";
+  } else {
+    x.style.display = "none";
+  }
+     */
+
+}
+
+</script>

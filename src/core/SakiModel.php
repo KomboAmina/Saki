@@ -29,6 +29,23 @@ class SakiModel extends ConnectedModel{
         return intval($cn)>0;
 
     }
+
+    public function getTask(int $taskid):mixed{
+
+        $task=null;
+
+        $st=$this->dbcon->executeQuery("SELECT * FROM `tasks` WHERE id=?",
+        array($taskid));
+
+        while($ro=$st->fetchObject()){
+
+            $task=$ro;
+
+        }
+
+        return $task;
+
+    }
     
 
 }

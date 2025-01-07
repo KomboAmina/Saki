@@ -164,6 +164,74 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
+    public function projectHasNestedTasks(int $projectid):bool{
+
+        $tasks=$this->getProjectTasks($projectid);
+
+        $totalNested=0;
+
+        foreach($tasks as $task){
+
+            $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `nestedtasks` WHERE linkedtask=?",
+            array($task->id));
+
+            $totalNested+=$st->fetchColumn();
+
+        }
+
+        return intval($totalNested)>0;
+
+    }
+
+    public function getMainProjectTasks(int $projectid):array{
+
+        $tasks=array();
+
+        $hasNested=$this->projectHasNestedTasks($projectid);
+
+        if($hasNested){
+
+            $st=$this->dbcon->executeQuery("SELECT DISTINCT(nestedtasks.maintask) as taskid FROM `nestedtasks`
+             INNER JOIN `tasks`
+              ON tasks.projectid=nestedtasks.maintask WHERE tasks.projectid=?
+              ORDER BY tasks.iscomplete DESC, tasks.priority ASC",array($projectid));
+
+              while($ro=$st->fetchObject()){
+
+                    $tasks[]=$this->getTask($ro->taskid);
+
+              }
+
+        }
+        else{
+
+            $tasks=$this->getProjectTasks($projectid);
+
+        }
+        
+        return $tasks;
+
+    }
+
+    public function getNestedTasks(int $taskid):array{
+
+        $tasks=array();
+
+        $st=$this->dbcon->executeQuery("SELECT nestedtasks.linkedtask FROM `nestedtasks`
+        INNER JOIN `tasks` ON tasks.id=nestedtasks.linkedtask
+        WHERE nestedtasks.maintask=?
+        ORDER BY tasks.iscomplete DESC, tasks.priority ASC",array($taskid));
+
+        while($ro=$st->fetchObject()){
+
+            $tasks[]=$this->getTask($ro->linkedtask);
+
+        }
+
+        return $tasks;
+
+    }
+
     public function moveTask(array $vals):void{
 
         $this->dbcon->executeQuery("UPDATE `tasks` SET priority=? WHERE id=?",
@@ -220,6 +288,13 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
         $this->dbcon->executeQuery("INSERT INTO `tasks`(projectid,task,taskbody,priority) VALUES(?,?,?,?)",
         array($vals['projectid'],$vals['task'],$vals['body'],$vals['priority']));
+
+    }
+
+    public function editTask(array $vals):void{
+
+        $this->dbcon->executeQuery("UPDATE `tasks` SET task=?,taskbody=? WHERE id=?",
+        array($vals['task'],$vals['body'],$vals['taskid']));
 
     }
 

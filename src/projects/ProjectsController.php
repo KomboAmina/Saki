@@ -164,4 +164,40 @@ class ProjectsController extends \Saki\Core\SakiController{
 
     }
 
+    public function editTask(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        if(isset($params['task']) && isset($params['desc']) && isset($params['projectid'])){
+
+            $ret['errors']=$this->checkBlanks(array($params['task'],
+                                                $params['desc'],
+                                                $params['projectid']));
+
+        }
+        else{
+
+            $ret['errors'][]="missing task data parameters.";
+
+        }
+
+        if(empty($ret['errors'])){
+
+            $this->model->editTask(
+                                    array(
+                                        "projectid"=>$params['projectid'],
+                                        "task"=>$params['task'],
+                                        "body"=>$params['desc'],
+                                        "taskid"=>$params['taskid']
+                                    )
+                                );
+
+            $ret['status']="task updated";
+
+        }
+
+        return $ret;
+
+    }
+
 }

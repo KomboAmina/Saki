@@ -10,6 +10,8 @@ if($init){
 
 if(isset($_POST['action'])){
 
+    echo $_POST['action'];
+
     $methodName=$controller->model->formatMethodName($_REQUEST['action']);
 
     $formData=$controller->model->getSubmittedData($_REQUEST);
