@@ -171,10 +171,48 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
-    public function markTask(array $vals):void{
+    public function markTask(array $vals):bool{
 
         $this->dbcon->executeQuery("UPDATE `tasks` SET iscomplete=? WHERE id=?",
         array($vals['iscomplete'],$vals['taskid']));
+
+        $projectStatusChanged=false;
+
+        if($vals['iscomplete']==true){
+
+            $rate=$this->getProjectCompletionRate($vals['projectid']);
+
+            $status=$this->getInfo("projects","id",$vals['projectid'],"status");
+
+            if($rate==100 && $status=="open"){
+
+                $this->dbcon->executeQuery("UPDATE `projects` SET status=? WHERE id=?",
+                array("completed",$vals['projectid']));
+
+                $projectStatusChanged=true;
+
+            }
+
+        }
+
+        if($vals['iscomplete']==false){
+
+            $rate=$this->getProjectCompletionRate($vals['projectid']);
+
+            $status=$this->getInfo("projects","id",$vals['projectid'],"status");
+
+            if($rate<100 && $status!="open"){
+
+                $this->dbcon->executeQuery("UPDATE `projects` SET status=? WHERE id=?",
+                array("open",$vals['projectid']));
+
+                $projectStatusChanged=true;
+
+            }
+
+        }
+
+        return $projectStatusChanged;
 
     }
 

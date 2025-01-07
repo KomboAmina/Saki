@@ -21,7 +21,11 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
 //print_r($tasks);
 
 ?>
-<h2><?php echo number_format($controller->model->getProjectCompletionRate($project->id),2);?>% Complete</h2>
+<h2>Tasks: <?php echo number_format($rate=$controller->model->getProjectCompletionRate($project->id),2);?>% Complete</h2>
+<div class="progress mt-2 mb-2" role="progressbar"
+ aria-label="Progress Bar" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+  <div class="progress-bar <?php echo $controller->model->getProgressBarColor($rate);?>" style="width: <?php echo $rate;?>%"></div>
+</div>
 <section class="list-group">
     <?php foreach($tasks as $task){
         

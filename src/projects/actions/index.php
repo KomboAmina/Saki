@@ -34,8 +34,17 @@ if(isset($_POST['action'])){
             <?php
             break;
         case "addTask": case "moveTask": case "markTask":
-            $project=$controller->model->getProject($_REQUEST['projectid']);
-            include_once "tasks.php";
+            if($ret['status']=="project changed"){
+                ?>
+                <script type="text/javascript">
+                    window.location.reload();
+                </script>
+            <?php
+            }
+            else{
+                $project=$controller->model->getProject($_REQUEST['projectid']);
+                include_once "tasks.php";
+            }
             break;
     }
     

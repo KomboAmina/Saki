@@ -152,12 +152,13 @@ class ProjectsController extends \Saki\Core\SakiController{
 
         $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
 
-        $this->model->markTask(array(
+        $changed=$this->model->markTask(array(
                                 "taskid"=>$params['taskid'],
-                                "iscomplete"=>$params['iscomplete']
+                                "iscomplete"=>$params['iscomplete'],
+                                "projectid"=>$params['projectid']
                                 ));
 
-        $ret['status']="task moved";
+        $ret['status']=($changed) ? "project changed":"task marked";
 
         return $ret;
 
