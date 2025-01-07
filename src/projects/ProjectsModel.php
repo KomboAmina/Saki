@@ -151,7 +151,7 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
         $tasks=array();
 
-        $st=$this->dbcon->executeQuery("SELECT * FROM `tasks` WHERE projectid=? ORDER BY priority ASC",
+        $st=$this->dbcon->executeQuery("SELECT * FROM `tasks` WHERE projectid=? ORDER BY iscomplete DESC, priority ASC",
         array($projectid));
 
         while($ro=$st->fetchObject()){
@@ -171,19 +171,14 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
+    public function markTask(array $vals):void{
+
+        $this->dbcon->executeQuery("UPDATE `tasks` SET iscomplete=? WHERE id=?",
+        array($vals['iscomplete'],$vals['taskid']));
+
+    }
+
     public function addTask(array $vals):void{
-
-        /**CREATE TABLE `tasks`(
-    id INT(30) NOT NULL AUTO_INCREMENT,
-    projectid INT(11) NOT NULL,
-    task VARCHAR(100) NOT NULL,
-    taskbody TEXT,
-    priority INT(1) NOT NULL DEFAULT 0,
-    iscomplete BOOLEAN NOT NULL DEFAULT false,
-
-    PRIMARY KEY(id),
-    FOREIGN KEY(projectid) REFERENCES `projects`(id)
-); */
 
         $this->dbcon->executeQuery("INSERT INTO `tasks`(projectid,task,taskbody,priority) VALUES(?,?,?,?)",
         array($vals['projectid'],$vals['task'],$vals['body'],$vals['priority']));

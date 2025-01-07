@@ -148,4 +148,19 @@ class ProjectsController extends \Saki\Core\SakiController{
 
     }
 
+    public function markTask(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        $this->model->markTask(array(
+                                "taskid"=>$params['taskid'],
+                                "iscomplete"=>$params['iscomplete']
+                                ));
+
+        $ret['status']="task moved";
+
+        return $ret;
+
+    }
+
 }

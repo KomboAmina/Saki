@@ -1,10 +1,10 @@
 <?php
 
-if($task->priority>1){
+if(!$task->iscomplete){
 
     ?>
-    <form
-id="fm-move-task-up"
+     <form
+id="fm-mark-task-complete"
 hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="#dv-tasks"
 hx-swap="innerHTML"
@@ -13,17 +13,19 @@ class="d-grid"
 >
 <input type="hidden" name="taskid" value="<?php echo $task->id;?>"/>
 <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>
-<input type="hidden" name="priority" value="<?php echo $task->priority-1;?>"/>
-<input type="hidden" name="action" value="move task"/>
-<button class="btn btn-sm btn-outline-primary">&uarr;</button>
+<input type="hidden" name="iscomplete" value="<?php echo !$task->iscomplete;?>"/>
+<input type="hidden" name="action" value="mark task"/>
+<button class="btn btn-sm btn-outline-primary">&check;</button>
 </form>
     <?php
 
 }
 
-?>
-    <form
-id="fm-move-task-down"
+if($task->iscomplete){
+
+    ?>
+     <form
+id="fm-mark-task-complete"
 hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="#dv-tasks"
 hx-swap="innerHTML"
@@ -32,8 +34,10 @@ class="d-grid"
 >
 <input type="hidden" name="taskid" value="<?php echo $task->id;?>"/>
 <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>
-<input type="hidden" name="priority" value="<?php echo $task->priority+1;?>"/>
-<input type="hidden" name="action" value="move task"/>
-<button class="btn btn-sm btn-outline-primary">&darr;</button>
+<input type="hidden" name="iscomplete" value="<?php echo !$task->iscomplete;?>"/>
+<input type="hidden" name="action" value="mark task"/>
+<button class="btn btn-sm btn-outline-primary">&dash;</button>
 </form>
     <?php
+
+}

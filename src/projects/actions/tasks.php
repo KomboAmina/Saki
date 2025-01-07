@@ -25,21 +25,28 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
     <?php foreach($tasks as $task){
         
         $defaultpriority=$task->priority;
-
+        if($task->iscomplete){
+            echo "<div style='text-decoration:line-through;'>";
+        }
         ?>
         <a href="#" class="list-group-item">
             <div class="row justify-content-start">
-                <div class="col-sm-12 col-md-1"><?php include "move.php";?></div>
+                <div class="col-sm-12 col-md-1">
+                    <?php if(!$task->iscomplete){include "move.php";}?></div>
                 <div class="col-sm-12 col-md-7">
                 <?php echo "<h3>".$task->task."</h3><small>";
                 echo ($task->iscomplete) ?"complete":"pending";
                 echo "&nbsp; | &nbsp; priority: ".$task->priority."</small>";?>
                 </div>
-                <div class="col-sm-12 col-md-1">&check;</div>
+                <div class="col-sm-12 col-md-1"><?php include "mark.php";?></div>
                 <div class="col-sm-12 col-md-3">edit/delete</div>
             </div>
         </a>
-    <?php }?>
+    <?php
+    if($task->iscomplete){
+        echo "</div>";
+    }
+    }?>
 </section>
 <?php
 

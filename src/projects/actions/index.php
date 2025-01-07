@@ -33,7 +33,7 @@ if(isset($_POST['action'])){
             </script>
             <?php
             break;
-        case "addTask": case "moveTask":
+        case "addTask": case "moveTask": case "markTask":
             $project=$controller->model->getProject($_REQUEST['projectid']);
             include_once "tasks.php";
             break;
