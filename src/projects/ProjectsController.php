@@ -133,4 +133,19 @@ class ProjectsController extends \Saki\Core\SakiController{
 
     }
 
+    public function moveTask(array $params):mixed{
+
+        $ret=array("errors"=>array(),"status"=>"blank","return"=>null);
+
+        $this->model->moveTask(array(
+                                "taskid"=>$params['taskid'],
+                                "priority"=>$params['priority']
+                                ));
+
+        $ret['status']="task moved";
+
+        return $ret;
+
+    }
+
 }

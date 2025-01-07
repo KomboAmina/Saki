@@ -164,6 +164,13 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
+    public function moveTask(array $vals):void{
+
+        $this->dbcon->executeQuery("UPDATE `tasks` SET priority=? WHERE id=?",
+        array($vals['priority'],$vals['taskid']));
+
+    }
+
     public function addTask(array $vals):void{
 
         /**CREATE TABLE `tasks`(
