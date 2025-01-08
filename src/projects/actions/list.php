@@ -20,7 +20,7 @@ $projects=$controller->model->getListProjects();
 <div class="row justify-content-center">
     <div class="col-sm-12 col-md-4 text-center p-4">
 
-        <p class="display-1">&approx;<?php echo number_format($controller->model->getUniversalCompletionRate());?>%</p>
+        <p class="display-1">&approx;<br /><?php echo number_format($controller->model->getUniversalCompletionRate());?>%</p>
         <p>complete</p>
 
     </div>

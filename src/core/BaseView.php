@@ -21,6 +21,8 @@ class BaseView{
 
     public function load():void{
 
+        $titleprefix=(isset($_GET['levelb']) && $this->route=="projects") ? $this->model->getProject($_GET['levelb'])->title:"";
+
         include_once "src/partial/header.php";
 
         $baseFile="src/".$this->route."/base.php";
