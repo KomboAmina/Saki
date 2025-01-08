@@ -1,9 +1,5 @@
-<?php
+<section class="container">
 
-?>
-<section class="container row justify-content-center">
-
-    <div class="col-sm-12 col-md-10">
 <form
 id="fm-add-project"
 hx-post="<?php echo URL;?>src/projects/actions/index.php"
@@ -17,7 +13,7 @@ class="bordered"
 
     <input type="hidden" name="desc" value="project description here."/>
 
-    <div class="row g-3 align-items-start">
+    <div class="row">
 
         <div class="col-sm-12 col-md-8">
 
@@ -26,9 +22,9 @@ class="bordered"
         </div>
 
         <div class="col-sm-12 col-md-4">
-
-            <button type="submit" class="btn btn-primary">Add Project</button>
-
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Add Project</button>
+            </div>
         </div>
 
     </div>
@@ -36,7 +32,4 @@ class="bordered"
 
 </form>
 
-</div>
-
 </section>
-

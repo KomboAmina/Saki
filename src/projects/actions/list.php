@@ -16,18 +16,18 @@ $projects=$controller->model->getListProjects();
 
 ?>
 <section class="container p-4">
-<h1>Projects</h1>
+
 <div class="row justify-content-center">
     <div class="col-sm-12 col-md-4 text-center p-4">
-
-        <p class="display-1">&approx;<br /><?php echo number_format($controller->model->getUniversalCompletionRate());?>%</p>
-        <p>complete</p>
+        
+        <div class="p-4 border">
+            <p class="display-1"><?php echo number_format($controller->model->getUniversalCompletionRate());?>%</p>
+            <p class="text-uppercase">complete</p>
+        </div>
 
     </div>
     <div class="col-sm-12 col-md-8">
-    <?php if(!empty($projects)){?>
-    <p>Choose
-    <?php } else{?>Create<?php }?> a Project to continue.</p>
+        <h1>Projects</h1>
         <div class="list-group mb-2">
         <?php foreach($projects as $project){
             $rate=$controller->model->getProjectCompletionRate($project->id);
@@ -35,7 +35,7 @@ $projects=$controller->model->getListProjects();
 
             <a href="<?php echo URL."projects/".$project->projectcode."/";?>"
             class="list-group-item">
-            <?php echo $project->title." &nbsp; | &nbsp; <small>tasks: ".$controller->model->countProjectTasks($project->id)." | (".$project->status.")</small>";?></a>
+            <?php echo $project->title." <small class='float-end'>| &nbsp; tasks: ".$controller->model->countProjectTasks($project->id)." &nbsp; | &nbsp; (".$project->status.")</small>";?></a>
             
             <?php
             include "progress_bar.php";
@@ -45,6 +45,13 @@ $projects=$controller->model->getListProjects();
 
         <?php }?>
         </div>
-        </section>
+
+        <?php
+
+        include "fm_add_project_title_only.php";
+        
+        ?>
+       
     </div>
 </div>
+</section>

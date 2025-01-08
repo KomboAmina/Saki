@@ -5,6 +5,3 @@ include "actions/list.php";
 
 ?>
 </section>
-<?php
-
-include "fm_add_project_title_only.php";

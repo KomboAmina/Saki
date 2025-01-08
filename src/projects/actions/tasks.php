@@ -44,7 +44,7 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
                 <div class="col-sm-12 col-md-10">
                 <?php echo "<h3>".$task->task."</h3><small>";
                 echo ($task->iscomplete) ?"complete":"pending";
-                echo "&nbsp; | &nbsp; priority: ".$task->priority."</small>";?>
+                echo "&nbsp;</small>";?>
                 </div>
                 <div class="col-sm-12 col-md-1">
                     <?php if($project->status=="open"){include "mark.php";}?>

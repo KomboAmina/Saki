@@ -13,7 +13,7 @@ $menuprojects=$this->model->getMenuProjects();
 
     <?php foreach($menuprojects as $menuproject){?>
 
-        <li class="col-sm-12 col-md-2">
+        <li class="col-sm-12 col-md-3">
             <?php if($menuproject->projectcode!==$_GET['levelb']){?>
             <a href="<?php echo URL."projects/".$menuproject->projectcode."/";?>">
             <?php }?>
