@@ -7,13 +7,13 @@ $menuprojects=$this->model->getMenuProjects();
 
     <ul class="row justify-content-end">
 
-        <li class="col-sm-12 col-md-2">
+        <li class="col-auto">
             <a href="<?php echo URL;?>projects/">Projects</a>
         </li>
 
     <?php foreach($menuprojects as $menuproject){?>
 
-        <li class="col-sm-12 col-md-3">
+        <li class="col-auto">
             <?php if($menuproject->projectcode!==$_GET['levelb']){?>
             <a href="<?php echo URL."projects/".$menuproject->projectcode."/";?>">
             <?php }?>

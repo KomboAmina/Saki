@@ -12,7 +12,7 @@ $taskrate=$controller->model->getTaskCompletionRate($task->id);
 
 <div id="dv-nested-tasks-<?php echo $task->id;?>">
 
-    <h3><?php echo number_format($taskrate,2);?>%</h3>
+    <h3><span id="count-task-<?php echo $task->id;?>" class="count-up" data-to="<?php echo number_format($taskrate);?>"><?php echo number_format($taskrate,2);?></span>%</h3>
 
     <?php
     $rate=$taskrate;

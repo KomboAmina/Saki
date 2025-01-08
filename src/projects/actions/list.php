@@ -14,16 +14,26 @@ $projects=$controller->model->getListProjects();
 
 //print_r($projects);
 
+$rate=$controller->model->getUniversalCompletionRate();
+
 ?>
 <section class="container p-4">
 
 <div class="row justify-content-center">
-    <div class="col-sm-12 col-md-4 text-center p-4">
+    <div class="col-sm-12 col-md-4 text-center">
         
         <div class="p-4 border">
-            <p class="display-1"><?php echo number_format($controller->model->getUniversalCompletionRate());?>%</p>
+            <p class="display-1">
+                <span class="count-up"
+                data-to="<?php echo number_format($rate);?>"
+                 id="cn-base"><?php
+                echo number_format($rate);?></span>%
+                </p>
             <p class="text-uppercase">complete</p>
         </div>
+        <?php
+        
+        include "progress_bar.php";?>
 
     </div>
     <div class="col-sm-12 col-md-8">
