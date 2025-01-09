@@ -8,13 +8,13 @@ $defaultpriority=0;
 
 ?>
 <section class="container">
-    <div class="row">
+    <div class="row justify-content-center">
         <div class="col-sm-12 col-md-3">
             <?php include "edit.php";
             if($project->status!=="open"){include "delete.php";}
             ?>
         </div>
-        <div class="col-sm-12 col-md-9">
+        <div class="col-sm-12 col-md-7">
             <div id="dv-project-profile">
                 <h1><?php echo $project->title;?></h1>
                 <p><?php echo $project->body;?></p>

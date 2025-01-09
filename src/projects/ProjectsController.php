@@ -20,16 +20,17 @@ class ProjectsController extends \Saki\Core\SakiController{
 
         if(empty($ret['errors'])){
 
-            $exists=$this->model->addProject(
+            $newcode=$this->model->addProject(
                                 array(
                                     "title"=>$params['title'],
                                     "body"=>$params['desc']
                                     )
                                 );
 
-            if($exists){
+            if(!empty($newcode)){
 
                 $ret['status']="project created";
+                $ret['return']=$newcode;
 
             }
         }

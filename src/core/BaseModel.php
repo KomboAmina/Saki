@@ -47,7 +47,7 @@ class BaseModel{
 
     public function getProgressBarColor(float $rate):string{
 
-        $color="bg-default";
+        /* $color="bg-default";
 
         switch($rate){
             case $rate>0 && $rate<=25:
@@ -64,7 +64,9 @@ class BaseModel{
                 break;
         }
 
-        return $color;
+        return $color;*/
+
+        return "bg-danger";
 
     }
 

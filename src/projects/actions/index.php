@@ -24,7 +24,18 @@ if(isset($_POST['action'])){
 
     switch($methodName){
         case "addProject":
-            include_once "list.php";
+            if($ret['status']=="project created" && !empty($ret['return'])){
+
+                $url=URL."projects/".$ret['return']."/";
+
+                ?>
+                <script type="text/javascript">
+                    window.location.href='<?php echo $url?>';
+                </script>
+                <?php
+
+            }
+            //include_once "list.php";
             break;
         case "editProject": case "deleteProject": case "editTask": case "deleteTask":
             ?>

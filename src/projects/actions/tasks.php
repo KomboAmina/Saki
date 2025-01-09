@@ -32,7 +32,7 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
         }
     
     ?>
-  <div class="accordion-item">
+  <div class="accordion-item mb-2">
     <div class="accordion-header container-fluid">
       <div class="list-group-item pt-4 pb-2 collapsed" type="button"
        data-bs-toggle="collapse" data-bs-target="#taskordion-<?php echo $task->id;?>"

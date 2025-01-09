@@ -67,14 +67,14 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
     }
 
-    public function addProject(array $vals):bool{
+    public function addProject(array $vals):string{
 
         $code=$this->generateProjectCode();
 
-        $st=$this->dbcon->executeQuery("INSERT INTO `projects`(title,projectcode,body,status) VALUES(?,?,?,?)",
+        $this->dbcon->executeQuery("INSERT INTO `projects`(title,projectcode,body,status) VALUES(?,?,?,?)",
         array($vals['title'],$code,$vals['body'],"open"));
 
-        return $this->projectCodeExists($code);
+        return ($this->projectCodeExists($code)) ? $code:"";
 
     }
 
@@ -113,7 +113,8 @@ class ProjectsModel extends \Saki\Core\SakiModel{
 
         $projects=array();
 
-        $st=$this->dbcon->executeQuery("SELECT id,title,projectcode,status FROM `projects` ORDER BY id ASC",
+        $st=$this->dbcon->executeQuery("SELECT id,title,projectcode,status
+         FROM `projects` ORDER BY id ASC",
         array());
 
         while($ro=$st->fetchObject()){
@@ -231,6 +232,17 @@ class ProjectsModel extends \Saki\Core\SakiModel{
         }
 
         return $tasks;
+
+    }
+
+    public function hasNestedTasks(int $taskid):bool{
+
+        $st=$this->dbcon->executeQuery("SELECT COUNT(id) FROM `nestedtasks` WHERE maintask=?",
+        array($taskid));
+
+        $cn=$st->fetchColumn();
+
+        return intval($cn)>0;
 
     }
 

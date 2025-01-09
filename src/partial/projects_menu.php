@@ -3,28 +3,28 @@
 $menuprojects=$this->model->getMenuProjects();
 
 ?>
-<nav class="container p-2">
+<nav class="container p-2 pt-4 skew-20 text-bright">
 
-    <ul class="row justify-content-end">
+    <div class="row justify-content-end">
 
-        <li class="col-auto">
-            <a href="<?php echo URL;?>projects/">Projects</a>
-        </li>
+        <div class="col-auto">
+
+            <a href="<?php echo URL;?>projects/" class="btn btn-outline-primary">Projects</a>
+
+        </div>
 
     <?php foreach($menuprojects as $menuproject){?>
 
-        <li class="col-auto">
-            <?php if($menuproject->projectcode!==$_GET['levelb']){?>
-            <a href="<?php echo URL."projects/".$menuproject->projectcode."/";?>">
-            <?php }?>
+        <div class="col-auto">
+            <a href="<?php echo URL."projects/".$menuproject->projectcode."/";?>"
+            class="btn btn-<?php if($menuproject->projectcode!==$_GET['levelb']){?>outline-<?php }?>primary">
             <?php echo $menuproject->title;?>
-            <?php if($menuproject->projectcode!==$_GET['levelb']){?>
+            
             </a>
-            <?php }?>
-        </li>
+        </div>
 
     <?php }?>
 
-    </ul>
+    </div>
 
 </nav>

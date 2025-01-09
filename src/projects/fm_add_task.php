@@ -4,7 +4,7 @@ hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="#dv-tasks"
 hx-swap="innerHTML"
 hx-on::after-request="this.reset()"
-class="container-fluid p-5"
+class="container-fluid pt-4 pb-4"
 >
 
     <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>
@@ -13,31 +13,25 @@ class="container-fluid p-5"
 
     <input type="hidden" name="desc" value="task description here."/>
 
-    <div class="row g-3 align-items-start">
+    <input type="hidden" name="priority" id="txtpriority" placeholder="Priority: 1=Highest"
+             class="form-control" value="<?php echo $defaultpriority+1;?>" min="1" required/>
 
-        <div class="col-auto">
+    <div class="row align-items-start">
 
-            <label>Task:</label>
+        <div class="col-sm-12 col-md-8">
 
             <input type="text" name="task" id="txttask" placeholder="Task"
              class="form-control" required/>
 
         </div>
 
-        <div class="col-auto">
+        <div class="col-sm-12 col-md-4">
 
-            <label>Priority (1- Highest)</label>
+            <div class="d-grid">
 
-            <input type="number" name="priority" id="txtpriority" placeholder="Priority: 1=Highest"
-             class="form-control" value="<?php echo $defaultpriority+1;?>" min="1" required/>
+                <button type="submit" class="btn btn-primary">Add Task</button>
 
-        </div>
-
-        <div class="col-auto">
-
-            <label>&nbsp;</label>
-
-            <button type="submit" class="btn btn-primary">Add Task</button>
+            </div>
 
         </div>
 

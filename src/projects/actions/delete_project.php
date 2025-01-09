@@ -14,7 +14,7 @@ hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="this"
 hx-swap="innerHTML"
 hx-on::after-request="this.reset()"
-class="container-fluid p-5"
+class="container-fluid mb-2 skew-10"
 >
 <h2>Are you Sure?</h2>
 
@@ -27,42 +27,25 @@ class="container-fluid p-5"
 
         <div class="m-3">
 
-            <input type="text" name="title" id="txttitle" placeholder="Project Title"
-             class="form-control" value="<?php echo $project->title;?>" readonly/>
+            <h2><?php echo $project->title;?></h2>
 
         </div>
 
         <div class="m-3">
 
-            <textarea class="form-control" rows="3" name="desc" id="desc" readonly><?php echo $project->body;?></textarea>
+            <p><?php echo $project->body;?></p>
 
         </div>
 
         <div class="m-3">
 
             <?php
+
+            echo "<p>".ucwords($project->status)."</p>";
 
             $statuses=array("open","completed","closed");
 
             ?>
-
-            <select name="status" class="form-select" readonly>
-
-            <?php
-
-            foreach($statuses as $status){
-
-                echo "<option value='".$status."' ";
-
-                if($status==$project->status){echo "selected";}
-
-                echo ">".ucwords($status)."</option>";
-
-            }
-
-            ?>
-
-            </select>
 
         </div>
 
@@ -71,9 +54,6 @@ class="container-fluid p-5"
             <button type="submit" class="btn btn-danger">Yes, Delete</button>
 
         </div>
-
-    
-
 
 </form>
 

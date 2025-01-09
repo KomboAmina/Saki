@@ -14,7 +14,7 @@ hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="this"
 hx-swap="innerHTML"
 hx-on::after-request="this.reset()"
-class="container-fluid p-5"
+class="container-fluid mb-2 skew-10"
 >
 <h2>Edit Project</h2>
 

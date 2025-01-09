@@ -19,10 +19,11 @@ $rate=$controller->model->getUniversalCompletionRate();
 ?>
 <section class="container p-4">
 
-<div class="row justify-content-center">
+<div class="row justify-content-center skew-10">
     <div class="col-sm-12 col-md-4 text-center">
         
-        <div class="p-4 border">
+        <div class="p-4 border border-2 bg-default text-bright">
+            <img src="<?php echo URL;?>public/img/logo-vertical.png" class="img-fluid pb-2 op-50"/>
             <p class="display-1">
                 <span class="count-up"
                 data-to="<?php echo number_format($rate);?>"
@@ -36,9 +37,9 @@ $rate=$controller->model->getUniversalCompletionRate();
         include "progress_bar.php";?>
 
     </div>
-    <div class="col-sm-12 col-md-8">
+    <div class="col-sm-12 col-md-7">
         <h1>Projects</h1>
-        <div class="list-group mb-2">
+        <div class="list-group mb-2 project-list">
         <?php foreach($projects as $project){
             $rate=$controller->model->getProjectCompletionRate($project->id);
             ?>

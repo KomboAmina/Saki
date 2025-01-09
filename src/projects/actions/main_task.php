@@ -1,18 +1,21 @@
 <?php
+
 $taskrate=$controller->model->getTaskCompletionRate($task->id);
 
 ?>
+<div class="container p-3 pt-0">
 <div class="row justify-content-end">
     <?php if($project->status=="open" && !$task->iscomplete){?>
-    <div class="col-sm-12 col-md-1">
+    <div class="col-sm-12 col-md-2">
         <?php include "focus_main_task_for_edit.php";?>
     </div>
     <?php }?>
     <?php if(!$task->iscomplete){?>
-    <div class="col-sm-12 col-md-1">
+    <div class="col-sm-12 col-md-2">
         <?php include "focus_main_task_for_delete.php";?>
     </div>
     <?php }?>
+</div>
 </div>
 
 <div id="dv-main-task-<?php echo $task->id;?>">
@@ -27,8 +30,12 @@ $taskrate=$controller->model->getTaskCompletionRate($task->id);
     include "main_task_edit.php";
 
     include "main_task_delete.php";
-    
-    include "nested_tasks.php";
+
+    //if($controller->model->hasNestedTasks($task->id)){
+
+        include "nested_tasks.php";
+
+    //}
 
     if(!$task->iscomplete){
     

@@ -7,6 +7,6 @@ hx-on::after-request="this.reset()"
 class="d-grid"
 >
 <input type="hidden" name="id" value="<?php echo $project->id;?>"/>
-<button type="submit" class="btn btn-outline-danger">Delete</button>
+<button type="submit" class="btn btn-outline-danger skew-10">Delete</button>
 
 </form>
