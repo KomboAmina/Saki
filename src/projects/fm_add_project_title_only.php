@@ -17,7 +17,7 @@ class="bordered"
 
     <input type="hidden" name="desc" value="project description here."/>
 
-    <div class="row g-3 align-items-start">
+    <div class="row align-items-start">
 
         <div class="col-sm-12 col-md-8">
 

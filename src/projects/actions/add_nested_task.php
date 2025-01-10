@@ -4,7 +4,7 @@ hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="#dv-nested-tasks-<?php echo $task->id;?>"
 hx-swap="innerHTML"
 hx-on::after-request="this.reset()"
-class="container-fluid pt-2 pb-2"
+class="container-fluid pt-2 pb-2 skew-10"
 >
 
     <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>
@@ -27,9 +27,11 @@ class="container-fluid pt-2 pb-2"
         </div>
 
         <div class="col-md-4">
+            <div class="d-grid">
 
             <button type="submit" class="btn btn-primary">Add Task</button>
-
+            
+            </div>
         </div>
 
     </div>

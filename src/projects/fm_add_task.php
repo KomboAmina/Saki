@@ -4,7 +4,7 @@ hx-post="<?php echo URL;?>src/projects/actions/index.php"
 hx-target="#dv-tasks"
 hx-swap="innerHTML"
 hx-on::after-request="this.reset()"
-class="container-fluid pt-4 pb-4"
+class="container-fluid pt-4 pb-4 skew-10"
 >
 
     <input type="hidden" name="projectid" value="<?php echo $project->id;?>"/>

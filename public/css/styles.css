@@ -22,7 +22,7 @@
 body{
 
     font-family:'OrbitronRegular', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-    background-image:url(../img/bg-shaded.jpg);
+    background-image:url(../img/bg-shaded.webp);
     background-repeat: repeat;
     background-position: 0 0;
     background-size: auto 100%;
@@ -77,6 +77,10 @@ p{
     color:#ffe1e7;
 }
 
+.form-control, .form-select{
+    border-width:2px;
+}
+
 .form-control::placeholder{
     color:#ffe1e7;
     opacity:0.5;
@@ -85,23 +89,37 @@ p{
 .form-control:focus, .form-select option{
     background-color:#45041C;
     color:#ffe1e7;
+    box-shadow:0px 0px 15px #FF204E;
 }
 
 .progress{
     background:transparent !important;
 }
 
+.progress-bar-striped{
+    box-shadow:0px 0px 15px #FF204E;
+    background-image: linear-gradient(45deg, #ff204e 25%, #45041c 25%, #45041c 50%, #ff204e 50%, #ff204e 75%, #45041c 75%, #45041c 100%);
+   
+}
+
+/*
+background-image: linear-gradient(20deg, #ff204e 25%, #45041c 25%, #45041c 50%, #ff204e 50%, #ff204e 75%, #45041c 75%, #45041c 100%);
+background-size: 58.48px 21.28px;
+*/
+
 .text-bright, footer{
     color:#ffe1e7;
 }
 
 .bg-default{
-    background-color:rgba(160, 21, 62,0.75);
+    background-color:rgba(160, 21, 62,0.25);
     transition:ease all 0.5s;
+    box-shadow:0px 0px 15px #FF204E;
 }
 
-.bg-default:hover{
+.bg-default:hover, .list-group-item:hover{
     background-color:rgba(160, 21, 62,1);
+    box-shadow:0px 0px 50px #FF204E;
 }
 
 .bg-default:hover img{
@@ -118,6 +136,7 @@ p{
 
 .list-group-item{
     border:none;
+    transition:ease all 0.5s;
 }
 
 .list-group-item small{
@@ -154,10 +173,12 @@ p{
 .btn-primary, .btn-outline-primary:hover{
     border:none;
     background-color:#FF204E;
+    box-shadow:0px 0px 15px #FF204E;
 }
 
 .btn-primary:hover{
     background-color:#45041C;
+    box-shadow:0px 0px 15px #FF204E;
 }
 
 .btn-outline-primary{
@@ -167,9 +188,69 @@ p{
 
 .project-list .list-group-item{
     border:1px solid #FF204E;
+    font-weight:bold;
 }
 
 .project-list .list-group-item:hover, .project-list .list-group-item:hover small{
     background-color:#FF204E;
     color:#ffe1e7;
 }
+
+.h-75{
+    max-height:75vh;
+    overflow-y:scroll;
+}
+
+.h-50{
+    max-height:50vh;
+    overflow-y:scroll;
+}
+
+.h-25{
+    min-height:25vh;
+}
+
+.h-10{
+    min-height:10vh;
+}
+
+/*
+scrollbar
+*/
+
+/* Firefox (uncomment to work in Firefox, although other properties will not work!)  */
+/** {
+  scrollbar-width: thin;
+  scrollbar-color: #FF204E #5D0E41;
+}*/
+
+/* Chrome, Edge and Safari */
+*::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  *::-webkit-scrollbar-track {
+    border-radius: 0px;
+    background-color: #5D0E41;
+  }
+  
+  *::-webkit-scrollbar-track:hover {
+    background-color: #00224D;
+  }
+  
+  *::-webkit-scrollbar-track:active {
+    background-color: #FFE1E7;
+  }
+  
+  *::-webkit-scrollbar-thumb {
+    border-radius: 0px;
+    background-color: #FF204E;
+  }
+  
+  *::-webkit-scrollbar-thumb:hover {
+    background-color: #FFE1E7;
+  }
+  
+  *::-webkit-scrollbar-thumb:active {
+    background-color: #FFE1E7;
+  }

@@ -3,9 +3,15 @@
 $menuprojects=$this->model->getMenuProjects();
 
 ?>
-<nav class="container p-2 pt-4 skew-20 text-bright">
+<nav class="container p-2 pt-4 pb-4 skew-20 text-bright">
 
-    <div class="row justify-content-end">
+    <div class="row justify-content-center">
+
+        <div class="col-auto">
+
+            <img src="<?php echo URL;?>public/img/logo-horizontal.webp" height="45px"/>
+
+        </div>
 
         <div class="col-auto">
 

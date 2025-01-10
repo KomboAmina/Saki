@@ -23,7 +23,7 @@ $defaultpriority=(isset($defaultpriority)) ? $defaultpriority:1;
 
 <?php include "progress_bar.php";?>
 
-<div class="accordion mt-4" id="taskordion">
+<div class="accordion mt-4 h-50" id="taskordion">
 <?php foreach($tasks as $task){
     
         $defaultpriority=$task->priority;

@@ -10,7 +10,10 @@ $defaultpriority=0;
 <section class="container">
     <div class="row justify-content-center">
         <div class="col-sm-12 col-md-3">
-            <?php include "edit.php";
+            <div class="h-10">&nbsp;</div>
+            <?php
+            
+            include "edit.php";
             if($project->status!=="open"){include "delete.php";}
             ?>
         </div>
